@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Decor</title>
+        <link href="css/styles.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            table{
+                width: 100%;
+                margin: 0;
+            }
+            td{
+                width: 50%;
+            }
+        </style>
+    </head>
+<body>
+    <!-- navbar -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+		<div class="container-fluid">
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+				<ul class="navbar-nav">
+					<a class="navbar-brand" th:href="@{/customer}">Decor</a>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/customer}"><i class="fa fa-home"></i> Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/displayOrder}"><i class="fa fa-history"></i> Orders History</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/displayCart}"><i class="fa fa-shopping-cart"></i> Cart</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" th:href="@{/customer_profile}"><i class="fa fa-user"></i> Profile</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
+    <div class="container">
+        <h1 class="display-3 text-center">Your Orders</h1>
+        <hr style="margin: 0;">
+        <div class="d-flex flex-row flex-wrap justify-content-between">
+            <div class="card" th:each="order:${orders}" style="width: 350px; margin: 1rem 0;">
+                <div class="card-header">
+                    <p th:text="${'Order#'+order.oId}"></p>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <tbody>
+                            <tr class="d-flex justify-content-between">
+                                <td>Date</td>
+                                <td th:text="${order.oDate}"></td>
+                            </tr>
+                            <tr class="d-flex justify-content-between">
+                                <td>Shipping Address</td>
+                                <td th:text="${order.shippingAddress}"></td>
+                            </tr>
+                            <tr class="d-flex justify-content-between">
+                                <td>Price</td>
+                                <td th:text="${order.oPrice}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <a th:href="@{'/detailedOrder/' + ${order.oId}}" class="btn btn-primary my-2">More Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

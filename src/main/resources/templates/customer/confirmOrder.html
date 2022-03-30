@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Decor</title>
+        <link href="css/styles.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            table{
+                width: 100%;
+            }
+            p{
+                margin-bottom: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+            <div class="card" style="width: 450px;">
+                <div class="card-body">
+               		<h1 class="text-center">Order Details</h1>
+                	<hr>
+                    <div class="d-flex flex-column">
+                        <h5>Customer Details</h5>
+                        <div>
+                            <table>
+                                <tbody>
+                                    <tr class="d-flex justify-content-between">
+                                        <td>Name</td>
+                                        <td th:text="${order.customer.name}"></td>
+                                    </tr>
+                                    <tr class="d-flex justify-content-between">
+                                        <td>Address</td>
+                                        <td th:text="${order.shippingAddress}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <h5>Order Details</h5>
+                        <div>
+                            <table>
+                                <tbody>
+                                    <tr class="d-flex justify-content-between">
+                                        <td>Order ID</td>
+                                        <td th:text="${'#'+ order.oId}"></td>
+                                    </tr>
+                                    <tr class="d-flex justify-content-between">
+                                        <td>Date</td>
+                                        <td th:text="${order.oDate}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>Products Added:</p>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <td>Product Name</td>
+                                        <td>Net Price</td>
+                                        <td>Quantity</td>
+                                        <td>Total</td>
+                                    </tr>
+                                    <tr th:each="item:${orderedItems}">
+                                        <td th:text="${item.product.pname}" style="overflow: hidden;"></td>
+                                        <td th:text="${item.product.price}"></td>
+                                        <td th:text="${item.pQuantity}"></td>
+                                        <td th:text="${item.pPrice}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <div class="d-flex justify-content-between" style="font-weight: bold;">
+                                                <p>Total</p>
+                                                <p th:text="${order.oPrice}+'Rs'"></p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-content-center">
+                        <form action="/confirmOrder">
+                            <button class="btn btn-success">Confirm Order</button>
+                        </form>
+                        <form action="/cancelOrder">
+                            <input type="hidden" name="orderId" th:value="${order.oId}">
+                            <button class="btn btn-danger">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

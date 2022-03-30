@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Decor</title>
+        <link href="css/styles.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+<body>
+    <!-- navbar -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+		<div class="container-fluid">
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+				<ul class="navbar-nav">
+					<a class="navbar-brand" th:href="@{/customer}">Decor</a>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" th:href="@{/customer}"><i class="fa fa-home"></i> Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/displayOrder}"><i class="fa fa-history"></i> Orders History</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/displayCart}"><i class="fa fa-shopping-cart"></i> Cart</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" th:href="@{/customer_profile}"><i class="fa fa-user"></i> Profile</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+    <!-- cart items -->
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+		    <h1 class="display-3">Cart items</h1> <hr>
+            <form action="/placeOrder">
+                <button type="submit" class="btn btn-primary">Place Order</button>
+            </form>
+        </div>
+        <hr style="margin: 0;">
+		<div class="row">
+			<div class="col-md-3" th:each="item:${items}" style="padding:10px;">
+				<div class="card" style="width: 18rem;">
+					<img th:src="${item.product.imageURL}" class="card-img-top" alt="..." style="height: 14rem;">
+					<div class="card-body">
+						<div class="d-flex justify-content-between">
+						<h5 class="card-title" th:text="${item.product.pname}">xyz</h5>
+						<h6 class="card-text" th:text="${item.cartPrice} + ' Rs.'">xyz</h6>
+						</div>
+						<div class="d-flex justify-content-between align-items-center">
+                        <h6 class="card-text" th:text="'Quantity: ' + ${item.quantity}">xyz</h6>
+                        <a th:href="@{'/deleteCart/' + ${item.cartId}}" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+						</div>
+						<!-- <form action="/addCart">
+							<input type="hidden" name="pid" th:value="${product.id}">
+							<label for="quantity" class="card-text">Quantity</label>
+							<input type="number" style="width: 45px" name="qty" class="form-number-input" id="quantity" min="1" th:max="${product.qty}" value="1">
+	                    	<button type="submit" class="btn btn-primary">Add to Cart</button>
+						</form> -->
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+</body>
+</html>
